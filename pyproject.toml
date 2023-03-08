@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pychat"
+version = "0.1.0"
+description = ""
+authors = ["Graham Ganssle <GrahamGanssle@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.9.5,<3.9.7 || >3.9.7,<4.0.0"
+numpy = "^1.24.2"
+streamlit = "^1.19.0"
+openai = "^0.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
