@@ -1,10 +1,14 @@
 import streamlit as st
-import json
+import json, time
 import openai
+import numpy as np
 
 
+# init
 with open('key.json', 'r') as f:
   openai.api_key = json.load(f)['key']
+
+st.set_page_config(layout="wide")
 
 
 # response = openai.Completion.create(
@@ -23,27 +27,39 @@ def pull_response():
   )
   return response['choices'][0]['message']['content']
 
-def get_text():
-  input_text = st.text_input("You: ","Ask the bot a question.")
-  return input_text 
+
+def message_extractor():
+  values = [val for val in st.session_state.values()]
+  keys = [key for key in st.session_state.keys()]
+  response = ''
+
+  for i in range(len(values)):
+    if values[i] != '':
+      response = response + f'{keys[i]}:\t{values[i]}\n'
+
+  return response
 
 
-st.sidebar.title("Recommended Responses")
-st.title("""
-Customer Chat  
-Please respond to your customer below in a timely manner. 
-""")
+# layout #############
+col1, col2, col3 = st.columns([2,4,2])
+
+with col1:
+  st.header("Customer Input")
+  st.image("assets/customer.png", width=100)
+  customer_input = st.text_input('Customer:','', key='cust')
+  st.session_state[f'{time.time()}_customer'] = customer_input
 
 
-ind = 1
-if st.sidebar.button('Make recommendations.'):
-  print(pull_response())
-  st.title("Recommended responses initialized")
-  ind = ind +1
-        
-user_input = get_text()
+with col2:
+  st.header("Conversation History")
+  st.text_area("Messages:", value=message_extractor(), height=500)
+  agent_input = st.text_input("Response: ","")
+  st.session_state[f'{time.time()}_agent'] = agent_input
+    
 
+with col3:
+  st.header("Agent Assistance")
+  st.image("assets/agent.png", width=130)
+  st.text_area("Responses: ","Select a response.", height=300)
 
-if True:
-  st.text_area("Bot:", value=pull_response(), height=200, max_chars=None, key=None)
 
