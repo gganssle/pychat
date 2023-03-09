@@ -1,19 +1,29 @@
 import openai
 
 
-def pull_response():
+def recommend_response(convo):
+  '''
+  Use an OpenAI model to recommend a response in the middle of a conversation.
+
+  Args:
+    convo       [string] conversational text
+  Returns:
+    response    [string] recommended agent response
+  Raises:
+    None
+  '''
   response = openai.ChatCompletion.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": "You are a helpful customer service agent."},
-        {"role": "user", "content": "What's a synonym for happy?"}
-      ]
+  model="gpt-3.5-turbo",
+  messages=[
+      {"role": "system", "content": "You are a helpful customer service agent."},
+      {"role": "user", "content": f'Recommend the next agent response to the following conversation: \"{convo}\"'}
+    ]
   )
 
   return response['choices'][0]['message']['content']
 
 
-def summarize(conversation):
+def summarize(convo):
   '''
   Use an OpenAI model to summarize a conversation.
 
@@ -28,7 +38,7 @@ def summarize(conversation):
     model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": "You are a helpful customer service agent."},
-        {"role": "user", "content": f'Very briefly summarize the following conversation: \"{conversation}\"'}
+        {"role": "user", "content": f'Very briefly summarize the following conversation: \"{convo}\"'}
       ]
   )
 

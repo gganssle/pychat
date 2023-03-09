@@ -24,8 +24,11 @@ with col1:
     '', 
     key='cust',
     on_change = lambda: setattr(st.session_state, 'agnt', '')
+    # on_change = lambda: setattr(st.session_state, 'agnt', chat_api.recommend_response(messages.message_extractor(st.session_state))) # swap the comments on the above two lines for fully automated agent responses
   )
   st.session_state[f'{time.time()}_customer'] = customer_input
+  if st.session_state.cust != '':
+    st.session_state.resp = chat_api.recommend_response(messages.message_extractor(st.session_state))
 
 
 # trailing message history
