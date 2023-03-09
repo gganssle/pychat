@@ -40,7 +40,7 @@ with col2:
     on_change = lambda: setattr(st.session_state, 'cust', '')
   )
   st.session_state[f'{time.time()}_agent'] = agent_input
-  messages.debug_state_printer(st.session_state)
+  # messages.debug_state_printer(st.session_state)
 
   # the message history div
   st.text_area(
@@ -53,16 +53,27 @@ with col2:
   
 # agent assitance tool
 with col3:
+  # header
   st.header("Agent Assistance")
   st.image("assets/agent.png", width=130)
+
+  # summarization tool
+  if st.button(
+      'Summarize Conversation',
+      on_click = lambda: messages.button_callback(st.session_state)
+    ):
+    label = 'Summarized conversation:'
+    seed = chat_api.summarize(messages.message_extractor(st.session_state))
+  else:
+    label = 'Suggested response:'
+    seed = ''
+
+  # conversational summary
   st.text_area(
-    "Responses:",
-    "Select a response.", 
+    label,
     height=300, 
-    key='resp'
+    key='resp',
+    value = seed
   )
-
-
-# messages.debug_state_printer(st.session_state)
 
 

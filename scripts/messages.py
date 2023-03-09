@@ -3,6 +3,16 @@ import numpy as np
 
 
 def message_extractor(state):
+  '''
+  A message extractor to pull conversational content from session state so that you can print or feed it to a model.
+
+  Args:
+    state       a streamlit.session_state object
+  Returns:
+    response    [string] output-formatted text
+  Raises:
+    None
+  '''
   # pull the values from state
   values = np.array([val for val in state.values()])
   keys = np.array([key.split('_')[-1] for key in state.keys()])
@@ -23,7 +33,23 @@ def message_extractor(state):
 
 
 def debug_state_printer(state):
+  '''
+  A quick tool to print debug info to stdout.
+
+  Args:
+    state   a streamlit.session_state object
+  Returns
+    None
+  Raises
+    None
+  '''
   for key in state.keys():
     print(key, '\t', state[key])
   print('\n\n')
 
+
+def button_callback(state):
+  state.cust = ''
+  state.agnt = ''
+
+  
