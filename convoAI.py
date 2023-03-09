@@ -27,6 +27,8 @@ with col1:
     # on_change = lambda: setattr(st.session_state, 'agnt', chat_api.recommend_response(messages.message_extractor(st.session_state))) # swap the comments on the above two lines for fully automated agent responses
   )
   st.session_state[f'{time.time()}_customer'] = customer_input
+
+  # auto responses take a long time (OpenAI API is slow). Comment out this section if you want to speed up the app at the sacrifice of losing auto respones.
   if st.session_state.cust != '':
     st.session_state.resp = chat_api.recommend_response(messages.message_extractor(st.session_state))
 

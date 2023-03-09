@@ -17,6 +17,11 @@ A simple little Streamlit app to call OpenAI's models for customer conversation 
       `poetry run streamlit run convoAI.py`
 
 
+# Auto-Resopnses
+The OpenAI API is slow to respond, and I haven't cared enough to make the call asynchronous using [Sanic](https://sanic.dev/en/) or other. That means this app runs mildly slow when you enter a customer comment. If you want to stop using autoresponses, comment out the lines marked "auto responses" in `convoAI.py`.
+
+Better yet, upgrade those lines to use an async call and hit me with a PR.
+
 # License
 Licensed [MIT](https://www.mit.edu/~amini/LICENSE.md). Feel free to use the code any way you wish!
 
